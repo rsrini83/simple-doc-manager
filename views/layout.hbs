@@ -60,6 +60,7 @@
           processData: false,
           data: fd,
           success: function(data) {
+              $("#docs_body").html('');
               loadItems();
              $('#exampleModal').modal('toggle');
           },
