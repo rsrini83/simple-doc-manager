@@ -60,12 +60,12 @@
           processData: false,
           data: fd,
           success: function(data) {
-            $('#statusMsgs').css('background', 'green');
-            $('#statusMsgs').text('File Successfully Uploaded!');
+              loadItems();
+             $('#exampleModal').modal('toggle');
           },
           error: function(jqXhr, textStatus, errorThrown) {
-            //var obj = JSON.parse(responseText.responseText);
-            $('#statusMsgs').text(textStatus);
+            alert("Failed to save");
+            $('#exampleModal').modal('toggle');
           }
         };
         $.ajax(settings);

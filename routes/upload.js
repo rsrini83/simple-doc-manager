@@ -23,16 +23,22 @@ var save_file = function(file_att, res){
         "uuid" : uuidv4()
 
       }
-      console.log(data);
       connection.query('INSERT INTO docs SET ?', data, function(err,
         result) {
-          console.error(err);
-          console.log(result);
+          var is_failed = false, error;
+          if(err){
+            error=err.message;
+            console.error(err.message);
+            is_failed=true;
+          }
           fs.unlink(file_att.path, function(err) {
             if (err) {
-              console.error(err);
+              console.error(err.message);
             } 
-            res.json({"status": 200, "message":"file uploaded"});
+            if(is_failed){
+              res.status(500).json({"status": 500, "message": error});
+            } else
+              res.json({"status": 200, "message":"file uploaded"});
           });
         });
     });
