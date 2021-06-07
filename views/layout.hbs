@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DocMgr</title>
+    <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/master.css" rel="stylesheet">
+    <link href="assets/vendor/chartsjs/Chart.min.css" rel="stylesheet">
+    <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="body" class="active">
+            <nav class="navbar navbar-expand-lg navbar-white bg-white">
+            </nav>
+            <!-- End table-->
+            <div class="content">
+                {{{body}}}
+            </div>
+            <!-- End table-->
+        </div>
+    </div>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chartsjs/Chart.min.js"></script>
+    <script src="assets/js/dashboard-charts.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+      var loadItems = function(){
+        $.get( "/docs/", function( data ) {
+          var tbody = $("#docs_body");
+          for(var i in data.data){
+            let item = data.data[i];
+              $('<tr>').append(
+                 $('<td>').text(item.id),
+                $('<td>').text(item.file_name),
+                $('<td>').text(item.file_type),
+                  $('<td>').text(item.size),
+                $('<td>').html(`<a href="/download/${item.uuid}" class="btn btn-outline-info btn-rounded"><i class="fas fa-download"></i></a>`))
+              .appendTo(tbody);
+          }
+        });
+      };
+      $(document).ready(loadItems);
+      var upload = function(){
+        var frm = $('#upload_file')[0];
+        var fd = new FormData(frm);
+        var settings = {
+          async: true,
+          crossDomain: true,
+          url: "/upload",
+          type: 'POST',
+          contentType:false,
+          processData: false,
+          data: fd,
+          success: function(data) {
+            $('#statusMsgs').css('background', 'green');
+            $('#statusMsgs').text('File Successfully Uploaded!');
+          },
+          error: function(jqXhr, textStatus, errorThrown) {
+            //var obj = JSON.parse(responseText.responseText);
+            $('#statusMsgs').text(textStatus);
+          }
+        };
+        $.ajax(settings);
+      }
+
+    </script>
+</body>
+
+</html>
