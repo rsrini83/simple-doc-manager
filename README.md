@@ -36,7 +36,9 @@ docker run -d -p 3000:3000 -e DB_HOST=host.docker.internal <image_name>
 
 
 Database Script
-
+```
+CREATE DATABASE testdb;
+  
 CREATE TABLE `docs` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
 	`file_name` VARCHAR(50) NOT NULL COLLATE 'latin1_swedish_ci',
@@ -49,3 +51,5 @@ CREATE TABLE `docs` (
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=4
+  
+```
